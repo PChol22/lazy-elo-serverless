@@ -3,7 +3,7 @@ import { RestApi } from 'aws-cdk-lib/aws-apigateway';
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
 
-import { AddGame } from 'functions/config';
+import { AddGame, AddPlayer } from 'functions/config';
 import { TABLE_NAME } from 'libs/table/table';
 
 interface CoreProps {
@@ -38,5 +38,6 @@ export class CoreStack extends Stack {
     });
 
     new AddGame(this, 'AddGame', { restApi: coreApi, table });
+    new AddPlayer(this, 'AddPlayer', { restApi: coreApi, table });
   }
 }
