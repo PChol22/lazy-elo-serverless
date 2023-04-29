@@ -1,9 +1,10 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
 import { RestApi } from 'aws-cdk-lib/aws-apigateway';
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
+import { Rule, Schedule } from 'aws-cdk-lib/aws-events';
 import { Construct } from 'constructs';
 
-import { AddGame, AddPlayer } from 'functions/config';
+import { AddGame, AddPlayer, UpdateEloScores } from 'functions/config';
 import { TABLE_NAME } from 'libs/table/table';
 
 interface CoreProps {
@@ -37,7 +38,17 @@ export class CoreStack extends Stack {
       billingMode: BillingMode.PAY_PER_REQUEST,
     });
 
+    const everyHourRule = new Rule(this, 'EveryHourRule', {
+      schedule: Schedule.cron({
+        minute: '1',
+      }),
+    });
+
     new AddGame(this, 'AddGame', { restApi: coreApi, table });
     new AddPlayer(this, 'AddPlayer', { restApi: coreApi, table });
+    new UpdateEloScores(this, 'UpdateEloScores', {
+      table,
+      rule: everyHourRule,
+    });
   }
 }
