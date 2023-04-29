@@ -44,7 +44,7 @@ export const sharedProviderConfig: ServerlessProviderConfig = {
  */
 export const sharedParams = {
   dev: {
-    profile: 'elo-developer',
+    profile: 'dev',
     apiGatewayCorsAllowedOrigins: ['http://localhost:3000'],
   },
   staging: {

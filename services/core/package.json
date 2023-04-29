@@ -1,0 +1,53 @@
+{
+  "name": "@elo/core",
+  "private": true,
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "scripts": {
+    "bootstrap": "cdk bootstrap --profile dev --qualifier de91078a5b",
+    "bootstrap-production": "cdk bootstrap --context stage=production --qualifier de91078a5b",
+    "bootstrap-staging": "cdk bootstrap --context stage=staging --qualifier de91078a5b",
+    "deploy": "cdk deploy --profile dev",
+    "deploy-production": "cdk deploy --context stage=production",
+    "deploy-staging": "cdk deploy --context stage=staging",
+    "destroy": "cdk destroy --profile dev",
+    "destroy-production": "cdk destroy --context stage=production",
+    "destroy-staging": "cdk destroy --context stage=staging",
+    "format-check": "prettier --check . ../../.prettierignore",
+    "format-fix": "prettier --write . ../../.prettierignore",
+    "lint-fix": "pnpm linter-base-config --fix",
+    "lint-fix-all": "pnpm lint-fix .",
+    "linter-base-config": "eslint --ext=js,ts",
+    "test": "nx run format-check && nx run test-linter && nx run test-type && nx run test-unit && nx run test-circular",
+    "test-circular": "pnpm depcruise --validate .dependency-cruiser.js .",
+    "test-linter": "pnpm linter-base-config .",
+    "test-type": "tsc",
+    "test-unit": "vitest run --coverage --passWithNoTests"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.321.1",
+    "@aws-sdk/lib-dynamodb": "^3.321.1",
+    "@elo/serverless-configuration": "workspace:^",
+    "@swarmion/serverless-contracts": "^0.28.1",
+    "@swarmion/serverless-helpers": "^0.28.1",
+    "ajv": "^8.6.3",
+    "dynamodb-toolbox": "^0.8.4",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.3",
+    "@types/uuid": "^9.0.1",
+    "@vitest/coverage-c8": "^0.30.1",
+    "aws-cdk": "^2.77.0",
+    "aws-cdk-lib": "^2.77.0",
+    "constructs": "^10.2.10",
+    "dependency-cruiser": "^12.11.3",
+    "esbuild": "^0.17.18",
+    "eslint": "^8.39.0",
+    "prettier": "^2.8.8",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.30.1"
+  }
+}
