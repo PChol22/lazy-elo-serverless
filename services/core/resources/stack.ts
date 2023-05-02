@@ -4,7 +4,7 @@ import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Rule, Schedule } from 'aws-cdk-lib/aws-events';
 import { Construct } from 'constructs';
 
-import { AddGame, AddPlayer, UpdateEloScores } from 'functions/config';
+import { AddGame, AddPlayer, Burst, UpdateEloScores } from 'functions/config';
 import { TABLE_NAME } from 'libs/table/table';
 
 interface CoreProps {
@@ -25,7 +25,7 @@ export class CoreStack extends Stack {
       },
     });
 
-    const table = new Table(this, 'Table', {
+    const table = new Table(this, 'EloCoreTable', {
       tableName: TABLE_NAME,
       partitionKey: {
         name: 'PK',
@@ -50,5 +50,6 @@ export class CoreStack extends Stack {
       table,
       rule: everyHourRule,
     });
+    new Burst(this, 'Burst', { restApi: coreApi });
   }
 }

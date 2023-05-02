@@ -4,7 +4,7 @@ import { Table } from 'dynamodb-toolbox';
 
 export const PK = 'PK';
 export const SK = 'SK';
-export const TABLE_NAME = 'coreTable';
+export const TABLE_NAME = 'EloCoreTable';
 
 const client = new DynamoDBClient({});
 const DocumentClient = DynamoDBDocumentClient.from(client);
